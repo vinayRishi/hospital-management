@@ -1,0 +1,29 @@
+.login-container{
+    max-width: 400px; 
+    margin: 60px auto 0;
+  }
+  
+  .error{
+    color: tomato; 
+    font-size: 12px; 
+    padding-top: 4px
+  }
+
+  .container{
+      position: relative;
+      height: 500px;
+      margin-bottom: -54px;
+      background-image: url("../../assets/images/assets/home-banner.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+  }
+  .label-required-error {
+    color: #d41c4d;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .alert-success{
+    max-width: 50%;
+    margin-left: 30%;
+  }

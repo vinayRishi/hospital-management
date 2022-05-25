@@ -1,0 +1,349 @@
+<div  class="main">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" (click)="goToHome()">Home</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link"  (click)="registerDoctor()">Register Doctor</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="registerLab()">Register Laboratory </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="registerStaffLogin()">Register Staff Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="registerTests()">Register Tests</a>
+        </li>
+    </ul>
+    <section *ngIf="!isChildActive || isChildComponent=='home'" class="hero-section">
+        <div class="container">
+          <div class="w-75 hero-text col-sm-12 text-center">
+            <h3 class="text-uppercase">
+              Providing best health care you deserve
+            </h3>
+            <p class="text-left">
+              Nithin Reddy Hospital is a private owned hospital that has been providing
+              excellent health care services to clients for a decade now.
+              <br />
+              We are fully equipped with the best health practioners, state of
+              the art equipments, innovative technologies and we are open 24/7
+            </p>
+          </div>
+        </div>
+    </section>
+    <div *ngIf="isChildComponent=='doctor'">
+        <form #adddoctorfrom="ngForm" novalidate class="px-4 py-3">
+            <div>
+                <h6 class="form-text text-center sub-heading" style="font-size: larger;">Register Doctor</h6><br>
+            </div>
+            <div class="row">
+                <div class="row" style="margin-top: 20px;">
+                    <h6 class="form-text text-center sub-heading">Doctor Details</h6><br>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" class="form-control is-valid"
+                            class="form-control"
+                            name="fullName" id="fullName"
+                            placeholder="fullName" #fullName="ngModel"
+                            [(ngModel)]="doctor.name"
+                            required>
+                            <div *ngIf="doctorFormSubmitted && fullName.invalid">
+                                <label *ngIf="fullName?.errors?.required" class="label col-form-label label-required-error">
+                                        Please provide a valid input.
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobileNumber">Mobile Number</label>
+                            <input type="text" class="form-control"  name="lastname"
+                            required placeholder="Surname"  #mobileNumber="ngModel"
+                            [(ngModel)]="doctor.mobileNumber">
+                            <div *ngIf="doctorFormSubmitted && mobileNumber.invalid">
+                            <label *ngIf="mobileNumber?.errors?.required" class="label col-form-label label-required-error">
+                                    Please provide a valid input.
+                            </label>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ageRequired">Age</label>
+                            <input type="number" class="form-control"  name="lastname"
+                            required placeholder="Age"  #ageRequired="ngModel"
+                            [(ngModel)]="doctor.age">
+                            <div *ngIf="doctorFormSubmitted && ageRequired.invalid">
+                            <label *ngIf="ageRequired?.errors?.required" class="label col-form-label label-required-error">
+                                    Please provide a valid input.
+                            </label>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="genderRequired">Gender</label>
+                            <input type="text" class="form-control"  name="genderRequired"
+                            required placeholder="gender"  #genderRequired="ngModel"
+                            [(ngModel)]="doctor.gender">
+                            <div *ngIf="doctorFormSubmitted && genderRequired.invalid">
+                            <label *ngIf="genderRequired?.errors?.required" class="label col-form-label label-required-error">
+                                    Please provide a valid input.
+                            </label>
+                        </div>
+                        </div>
+                    </div>  
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">  
+                        <div class="form-group">
+                            <label for="specilization">Specilization</label>
+                            <input type="text" class="form-control" name="specilization"
+                            required placeholder="Disease"  #specilization="ngModel"
+                            [(ngModel)]="doctor.specilization">
+                            <div *ngIf="doctorFormSubmitted && specilization.invalid">
+                            <label *ngIf="specilization?.errors?.required" class="label col-form-label label-required-error">
+                                    Please provide a valid input.
+                            </label>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="costperAppointment">Cost Per Appointment</label>
+                            <input type="number" class="form-control"  name="costperAppointment"
+                            required placeholder="PhoneNumber" #costperAppointment="ngModel"
+                            [(ngModel)]="doctor.costPerAppointment">
+                            <div *ngIf="doctorFormSubmitted && costperAppointment.invalid">
+                            <label *ngIf="costperAppointment?.errors?.required" class="label col-form-label label-required-error">
+                                    Please provide a valid input.
+                            </label>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="emailRequired">email</label>
+                            <input type="text" class="form-control"  name="emailRequired"
+                            required placeholder="email"  #emailRequired="ngModel"
+                            [(ngModel)]="doctor.email">
+                            <div *ngIf="doctorFormSubmitted && emailRequired.invalid">
+                                <label *ngIf="emailRequired?.errors?.required" class="label col-form-label label-required-error">
+                                        Please provide a valid input.
+                                </label>
+                            </div>
+                        </div>
+                    </div> 
+                    <div style="margin: 20px 20px 20px 20px ;">
+                        <div class="row" *ngIf="this.registrationModalBool.isDOctorRegistered">
+                            <div class="alert alert-success" role="alert">
+                                Doctor Register Successful!
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-2 offset-md-4">
+                            <button type="button" class="btn btn-success" (click)="saveDoctor()" >Save Details</button>
+                        </div>
+                        <div class="col-md-2 offset-md-1">
+                            <button type="button" class="btn btn-success" (click)="submitDoctorDetails()">Submit Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form> 
+    </div>
+    <div *ngIf="isChildComponent=='lab'">
+        <form #labfrom="ngForm" novalidate class="px-4 py-3">
+            <div>
+                <h6 class="form-text text-center sub-heading" style="font-size: larger;">Register Laboratory</h6><br>
+            </div>
+            <div class="row">
+                <div class="row" style="margin-top: 20px;">
+                    <h6 class="form-text text-center sub-heading">Laboratory Details</h6><br>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="labName">Laboratory Name</label>
+                            <input type="text" class="form-control is-valid"
+                            class="form-control"
+                            name="labName" id="labName"
+                            placeholder="Laboratory Name" #labName="ngModel"
+                            [(ngModel)]="lab.labName"
+                            required>
+                            <div *ngIf="labFormSubmitted && labName.invalid">
+                                <label *ngIf="labName?.errors?.required" class="label col-form-label label-required-error">
+                                        Please provide a valid input.
+                                </label>
+                            </div>
+                        </div>
+                     <div style="margin: 20px 20px 20px 20px ;">
+                        <div class="row" *ngIf="this.registrationModalBool.isLabRegistered">
+                            <div class="alert alert-success" role="alert">
+                                Laboratory Register Successful!
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-2 offset-md-4">
+                            <button type="button" class="btn btn-success" (click)="saveLaboratory()" >Save</button>
+                        </div>
+                        <div class="col-md-2 offset-md-1">
+                            <button type="button" class="btn btn-success" (click)="submitLabDetails()">Submit</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </form> 
+    </div>
+    <div *ngIf="isChildComponent=='staff'">
+        <form #staffregisterfrom="ngForm" novalidate class="px-4 py-3">
+            <div>
+                <h6 class="form-text text-center sub-heading" style="font-size: larger;">Register Staff</h6><br>
+            </div>
+            <div class="row">
+                <div class="row" style="margin-top: 20px;">
+                    <h6 class="form-text text-center sub-heading">Staff Details</h6><br>
+                    <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="emails">Email</label>
+                                <input type="email" class="form-control is-valid"
+                                class="form-control"
+                                name="fullName" id="fullName"
+                                placeholder="Email" #emails="ngModel"
+                                [(ngModel)]="staffUser.email"
+                                required>
+                                <div *ngIf="staffFormSubmitted && emails.invalid">
+                                    <label *ngIf="emails?.errors?.required" class="label col-form-label label-required-error">
+                                            Please provide a valid input.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="usernames">User Name</label>
+                                <input type="text" class="form-control"  name="lastname"
+                                required placeholder="User Name"  #usernames="ngModel"
+                                [(ngModel)]="staffUser.username">
+                                <div *ngIf="staffFormSubmitted && usernames.invalid">
+                                    <label *ngIf="usernames?.errors?.required" class="label col-form-label label-required-error">
+                                            Please provide a valid input.
+                                    </label>
+                                </div>
+                            </div>
+                        </div> 
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">  
+                        <div class="form-group">
+                            <label for="typerequired">Choose a Role Type -</label>
+                            <select name="doctor"  #typerequired="ngModel"
+                            [(ngModel)]="staffUser.usertype"
+                            required id="doctor">
+                                <option value="admin">admin</option>
+                                <option value="radiologist">radiologist</option>
+                                <option value="pathologist">pathologist</option>
+                                <option value="neurologist">neurologist</option>
+                                <option value="receptionist">receptionist</option>
+                            </select>
+                            <div *ngIf="staffFormSubmitted && typerequired.invalid">
+                              <label *ngIf="typerequired?.errors?.required" class="label col-form-label label-required-error">
+                                      Please provide a valid input.
+                              </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ageReuired">Age</label>
+                            <input type="number" class="form-control"  name="ageReuired"
+                            required placeholder="PhoneNumber" #ageReuired="ngModel"
+                            [(ngModel)]="staffUser.age">
+                            <div *ngIf="staffFormSubmitted && ageReuired.invalid">
+                            <label *ngIf="ageReuired?.errors?.required" class="label col-form-label label-required-error">
+                                    Please provide a valid input.
+                            </label>
+                        </div>
+                        </div>
+                    </div> 
+                    <div style="margin: 20px 20px 20px 20px ;">
+                        <div class="row" *ngIf="this.registrationModalBool.isStaffRegister">
+                            <div class="alert alert-success" role="alert">
+                                Staff Register Successful!
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-2 offset-md-4">
+                            <button type="button" class="btn btn-success" (click)="saveStaff()" >Save Details</button>
+                        </div>
+                        <div class="col-md-2 offset-md-1">
+                            <button type="button" class="btn btn-success" (click)="submitStaff()">Submit Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form> 
+    </div> 
+    <div *ngIf="isChildComponent=='tests'">
+        <form #testregisterForm="ngForm" novalidate class="px-4 py-3">
+            <div>
+                <h6 class="form-text text-center sub-heading" style="font-size: larger;">Register Test</h6><br>
+            </div>
+            <div class="row">
+                <div class="row" style="margin-top: 20px;">
+                    <h6 class="form-text text-center sub-heading">Test Details</h6><br>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="testNames">Test Name</label>
+                            <input type="text" class="form-control is-valid"
+                            class="form-control"
+                            name="fullName" id="fullName"
+                            placeholder="Test Name" #testNames="ngModel"
+                            [(ngModel)]="test.testName"
+                            required>
+                            <div *ngIf="testFormSUbmitted && testNames.invalid">
+                                <label *ngIf="testNames?.errors?.required" class="label col-form-label label-required-error">
+                                        Please provide a valid input.
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="costs">Cost</label>
+                            <input type="number" class="form-control"  name="lastname"
+                            required placeholder="Cost"  #costs="ngModel"
+                            [(ngModel)]="test.cost">
+                            <div *ngIf="testFormSUbmitted && costs.invalid">
+                                <label *ngIf="costs?.errors?.required" class="label col-form-label label-required-error">
+                                        Please provide a valid input.
+                                </label>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4"> 
+                        <div class="form-group">
+                            <label for="testrequired">Choose a lab type -</label>
+                            <select name="testrequired"  #testrequired="ngModel"
+                            [(ngModel)]="test.lab"
+                            required id="testrequired">
+                            <option *ngFor="let opt of staticValueLabs" [ngValue]="opt">{{opt.labName}}</option>
+                            </select>
+                            <div *ngIf="testFormSUbmitted && testrequired.invalid">
+                              <label *ngIf="testrequired?.errors?.required" class="label col-form-label label-required-error">
+                                      Please provide a valid input.
+                              </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin: 20px 20px 20px 20px ;">
+                        <div class="row" *ngIf="this.registrationModalBool.isTestsRegistered">
+                            <div class="alert alert-success" role="alert">
+                                Tests Register Successful!
+                              </div>
+                        </div>
+                    </div> 
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-2 offset-md-4">
+                            <button type="button" class="btn btn-success"  (click)="saveTests()">Save Details</button>
+                        </div>
+                        <div class="col-md-2 offset-md-1">
+                            <button type="button" class="btn btn-success" (click)="submitTests()">Submit Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form> 
+    </div>     
+</div>

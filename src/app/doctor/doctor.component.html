@@ -1,0 +1,173 @@
+<div style="margin-left: 10%;margin-right: 10%;">
+    <h4>List of patients waiting for treatment</h4>
+
+    <div class="accordion" id="accordionExample" style="margin-top: 20px;">
+        <div *ngFor=" let patients of patientList; let j=index">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                   {{patients?.patient?.firstName}} {{patients?.patient?.lastName}}  
+                    - &nbsp; 0{{ patients?.patient?.mobileNumber?.substring(3)}}
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                  This patient is waiting for  treatment for the disease of  - &nbsp; <strong>{{patients?.patientInformation?.disease}}.</strong> <br/>
+                    <button style="margin-top: 20px;" class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                     data-bs-target="#exampleModal" (click)="seletedPatient(patients)">
+                      Click here </button>
+                      &nbsp;&nbsp;<label style="margin-top: 40px;">to Add prescription for the required treatment for the patient</label>
+                      <br/>
+                      <button style="margin-top: 20px;" class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                     data-bs-target="#exampleModal1" (click)="selectedPatientsForTests(patients)">
+                      Click here </button>
+                      &nbsp;&nbsp;<label style="margin-top: 40px;">To add the any <b>Tests /scannings or  X-rays</b> required for the patient</label>
+                      <br/>
+                    <div class="row" >
+                      <div class="saved tests">
+                            <div class="row" *ngIf="patients?.patientInformation?.tests?.length>0" style="margin-top: 10px;">
+                                <div class="col-md-8 offset-md-2 text-center">
+                                   <label style="font-size: small;" class="label col-form-label sub-heading">Saved Tests</label>
+                                </div>
+                            </div>
+                            <div *ngIf="patients?.patientInformation?.tests?.length>0" class="table-responsive-md table-responsive-sm" style="margin-top:20px;">
+                                <table class="table table-bordered table-hover">
+                                  <thead>
+                                    <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Test Name</th>
+                                    <th scope="col">Lab Type</th>
+                                    <th scope="col">Actions</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let test of patients?.patientInformation?.tests;let i = index">
+                                      <td scope="row">{{i + 1}}</td>
+                                      <td>{{test.testName}}</td>
+                                      <td>{{test.lab?.labName}}</td>
+                                      <td>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                        (click)="deleteSelectedPatientsForTests(test,patients,j)"
+                                        style="margin-left: 20px;cursor:pointer" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                        </svg>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </div>
+                      </div>
+                    </div>
+                    <div class="row" >
+                      <div class="saved tests">
+                            <div class="row" *ngIf="patients?.patientInformation?.files?.length>0" style="margin-top: 10px;">
+                                <div class="col-md-8 offset-md-2 text-center">
+                                   <label style="font-size: small;" class="label col-form-label sub-heading">Saved Reports</label>
+                                </div>
+                            </div>
+                            <div *ngIf="patients?.patientInformation?.files?.length>0" class="table-responsive-md table-responsive-sm" style="margin-top:20px;">
+                                <table class="table table-bordered table-hover">
+                                  <thead>
+                                    <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">File Name</th>
+                                    <th scope="col">File Type</th>
+                                    <th scope="col">Actions</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let file of patients?.patientInformation?.files;let i = index">
+                                      <td scope="row">{{i + 1}}</td>
+                                      <td>{{file.name}}</td>
+                                      <td>{{file.type}}</td>
+                                      <!-- <td>{{formatBytes(file.size,2)}}</td> -->
+                                      <td>
+                                        <i class="bi bi-arrow-down"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;" (click)="downloadFile(file)" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                        </svg>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Prescription</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #prescriptionForm="ngForm" style="margin-top: 20px;">
+          <div class="row" >
+              <div class="col-md-8">
+                  <div class="form-group">
+                    <textarea name="prescriptionRequired" [(ngModel)]="selectedPatientForPrescription.prescription" 
+                    required placeholder="add prescription" class="form-control"
+                    #prescriptionRequired="ngModel"></textarea>
+                    <div *ngIf="formSubmitted && prescriptionRequired.invalid">
+                      <label *ngIf="prescriptionRequired?.errors?.required" class="label col-form-label label-required-error">
+                              Please provide a valid input.
+                      </label>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="modal-dismissal" data-bs-dismiss="modal">Close</button>
+        <button  class="btn btn-success center-block" (click)="savePrescription()" >Save Prescription</button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Tests/ Scannings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #testsForm="ngForm" style="margin-top: 20px;">
+          <div class="row" >
+              <div class="col-md-8">
+                  <div class="form-group">
+                    <label for="scanRequired" style="margin-bottom: 10px;">Choose a Test /Scanning </label>
+                    <select name="scanRequired"  #scanRequired="ngModel"
+                    [(ngModel)]="patientTestToFill" (ngModelChange)="valueSelected(patientTestToFill)"
+                    required id="scanRequired">
+                    <option *ngFor="let opt of tests" [ngValue]="opt">{{opt.testName}}</option>
+                    </select>
+                    <div *ngIf="testFormSubmitted && scanRequired.invalid">
+                      <label *ngIf="scanRequired?.errors?.required" class="label col-form-label label-required-error">
+                              Please provide a valid input.
+                      </label>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="modal-dismissal2" data-bs-dismiss="modal">Close</button>
+        <button  class="btn btn-success center-block" (click)="saveTests()" >Save Test</button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+

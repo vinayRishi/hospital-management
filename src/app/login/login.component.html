@@ -1,0 +1,50 @@
+
+ 
+<div ng-app="myApp" ng-controller="myController" class="container">
+    <form name="myForm">
+        <h6 class="form-text text-center sub-heading" style="font-size: xx-large;color: #2C9C80;" >Login</h6><br>
+      <div class="login-container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" name="email" [(ngModel)]="loginData.email" 
+              required placeholder="enter your email" class="form-control"
+              #emailRequired="ngModel">
+              <div *ngIf="formSubmitted && emailRequired.invalid">
+                <label *ngIf="emailRequired?.errors?.required" class="label col-form-label label-required-error">
+                        Please provide a valid input.
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" name="pass" [(ngModel)]="loginData.password" 
+                placeholder="enter your password" required class="form-control"
+                #passwordRequired="ngModel">
+                <div *ngIf="formSubmitted && passwordRequired.invalid">
+                  <label *ngIf="passwordRequired?.errors?.required" class="label col-form-label label-required-error">
+                          Please provide a valid input.
+                  </label>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-12" style="margin-top: 20px;">
+            <div class="form-group">
+              <button (click)="authenticate()" class="btn btn-success center-block">Login</button>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row"  style="margin-top: 20px;">
+          <div class="col-md-12">
+            <!-- <a class="text-center" (click)="signup()">SignUp</a> -->
+            <div *ngIf="showError" class="alert alert-danger">{{errorMessage}}</div>
+            <!-- <div ng-show="showSuccess" class="alert alert-success">Login Successful!</div> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

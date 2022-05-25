@@ -1,0 +1,299 @@
+<div  class="main">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" (click)="setModes('home')">Home</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link"  (click)="setModes('create')">Register Appointment</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="setModes('update')">Modify Patient Details </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" (click)="setModes('delete')">Delete Patient Details</a>
+        </li> -->
+        <!-- <li class="nav-item">
+          <a class="nav-link" (click)="registerTests()">Register Tests</a>
+        </li> -->
+    </ul>
+    <section *ngIf="!isChildActive || isChildComponent=='home'" class="hero-section">
+        <div class="container">
+          <div class="w-75 hero-text col-sm-12 text-center">
+            <h3 class="text-uppercase">
+              Providing best health care you deserve
+            </h3>
+            <p class="text-left">
+              Nithin Reddy Hospital is a private owned hospital that has been providing
+              excellent health care services to clients for a decade now.
+              <br />
+              We are fully equipped with the best health practioners, state of
+              the art equipments, innovative technologies and we are open 24/7
+            </p>
+          </div>
+        </div>
+    </section>
+    <form #createappointment="ngForm" novalidate class="px-4 py-3">
+        <div class="mb-3">
+        <div *ngIf="modes.addMode">
+            <h6 class="form-text text-center sub-heading" >Create Appointment</h6><br>
+        </div>
+        <div *ngIf="modes.editMode">
+            <h6 class="form-text text-center sub-heading" >Update Patient Detials</h6><br>
+        </div>
+        <div *ngIf="modes.deleteMode">
+            <h6 class="form-text text-center sub-heading" >Delete Patient</h6><br>
+        </div>
+            <div *ngIf="modes.editMode || modes.deleteMode" class="row" style="margin-top: 20px;">
+            <div class="col-md-1"></div>
+                <div class="col-md-4 offset-md-2">
+                    <div class="form-group">
+                        <label for="searchField">Search Patient</label>
+                        <input type="search" class="form-control is-valid"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        class="form-control"
+                        name="searchField" id="searchField"
+                        placeholder="patient">
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="isChildActive">
+                <h6 class="form-text text-center sub-heading">Basic Details</h6><br>
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="firstName">Firstname</label>
+                        <input type="text" class="form-control is-valid"
+                        class="form-control"
+                        name="firstname" id="exampleInputFirdtname"
+                        placeholder="Firstname" #firstName="ngModel"
+                        [(ngModel)]="patientAndPatientInformation.patient.firstName"
+                        required>
+                        <div *ngIf="formSubmitted && firstName.invalid">
+                            <label *ngIf="firstName?.errors?.required" class="label col-form-label label-required-error">
+                                    Please provide a valid input.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Lastname</label>
+                        <input type="text" class="form-control"  name="lastname"
+                        required placeholder="Surname"  #lastName="ngModel"
+                        [(ngModel)]="patientAndPatientInformation.patient.lastName">
+                        <div *ngIf="formSubmitted && lastName.invalid">
+                        <label *ngIf="lastName?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                    </div>
+                    </div>
+                </div>  
+                <div class="col-md-1"></div>
+                <div class="col-md-4">  
+                    <div class="form-group">
+                        <label for="disease">Diesese</label>
+                        <input type="text" class="form-control" name="disease"
+                        required placeholder="Disease"  #disease="ngModel"
+                        [(ngModel)]="patientAndPatientInformation.patient.disease">
+                        <div *ngIf="formSubmitted && disease.invalid">
+                        <label *ngIf="disease?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobileNumber">PhoneNumber</label>
+                        <input type="text" class="form-control"  name="phonenumber"
+                        required placeholder="PhoneNumber" #mobileNumber="ngModel"
+                        [(ngModel)]="patientAndPatientInformation.patient.mobileNumber">
+                        <div *ngIf="formSubmitted && mobileNumber.invalid">
+                        <label *ngIf="mobileNumber?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                    </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="row" *ngIf="isChildActive" style="margin-top: 20px;"> 
+                <h6 class="form-text text-center sub-heading">Additional Details</h6><br> 
+                <div class="col-md-1"></div>  
+                <div class="col-md-4">   
+                    <div class="form-group">
+                        <label for="emailRequired">Email</label>
+                        <input type="text" class="form-control" name="email"
+                        required  placeholder="email" #emailRequired="ngModel"
+                        [(ngModel)]="patientAndPatientInformation.patientInformation.email">
+                        <div *ngIf="formSubmitted && emailRequired.invalid">
+                        <label *ngIf="emailRequired?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="genderRequired">Gender</label>
+                        <input type="text" class="form-control" name="gender"
+                        required placeholder="Gender"  #genderRequired="ngModel"
+                        [(ngModel)]="patientAndPatientInformation.patientInformation.gender">
+                        <div *ngIf="formSubmitted && genderRequired.invalid">
+                        <label *ngIf="genderRequired?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                    <label for="doctorRequired">Choose a Doctor -</label>
+                    <select name="doctor"  #doctorRequired="ngModel"
+                    [(ngModel)]="patientAndPatientInformation.patientInformation.doctor.doctorId"
+                    required id="doctor" (change)="setSelectedDoctor(patientAndPatientInformation.patientInformation.doctor.doctorId)">
+                    <option *ngFor="let opt of doctorList"  [ngValue]="opt.doctorId">{{opt.specilization}}</option>
+                    </select>
+                    <div *ngIf="formSubmitted && doctorRequired.invalid">
+                        <label *ngIf="doctorRequired?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                    </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 20px;">
+                    <div class="alert alert-secondary" role="alert">
+                        Selected Doctor : {{selectedDoctor?.specilization}} <br/>
+                        Doctor Name : {{selectedDoctor?.name}}
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="addressRequired">Address</label>
+                        <textarea class="form-control" name="address"
+                        required placeholder="Address" #addressRequired="ngModel"
+                        [(ngModel)]="patientAndPatientInformation.patientInformation.address.address"></textarea>
+                    <div *ngIf="formSubmitted && addressRequired.invalid">
+                        <label *ngIf="addressRequired?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cityRequired">city</label>
+                        <input type="email" class="form-control" name="city" 
+                        required placeholder="city"   #cityRequired="ngModel"
+                        [(ngModel)]="patientAndPatientInformation.patientInformation.address.city">
+                        <div *ngIf="formSubmitted && cityRequired.invalid">
+                        <label *ngIf="cityRequired?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="stateRequired">state</label>
+                        <input type="text" class="form-control" name="state" placeholder="state"  #stateRequired="ngModel"
+                        required [(ngModel)]="patientAndPatientInformation.patientInformation.address.state">
+                        <div *ngIf="formSubmitted && stateRequired.invalid">
+                        <label *ngIf=" stateRequired?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="countryRequired">country</label>
+                        <input type="text" class="form-control"  name="country" placeholder="country" #countryRequired="ngModel"
+                        required [(ngModel)]="patientAndPatientInformation.patientInformation.address.country">
+                        <div *ngIf="formSubmitted && countryRequired.invalid">
+                        <label *ngIf=" countryRequired?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipCodeRequired">pin code</label>
+                        <input type="text" class="form-control" name="pincode" placeholder="pin code"  #zipCodeRequired="ngModel"
+                        required [(ngModel)]="patientAndPatientInformation.patientInformation.address.zipCode">
+                        <div *ngIf="formSubmitted && zipCodeRequired.invalid">
+                        <label *ngIf=" zipCodeRequired?.errors?.required" class="label col-form-label label-required-error">
+                                Please provide a valid input.
+                        </label>
+                        </div>
+                    </div>
+                </div>    
+            </div><br><br>
+            <div style="margin: 20px 20px 20px 20px ;">
+                <div class="row" *ngIf="isPatientRegisteredOrModified">
+                    <div class="alert alert-success" role="alert">
+                        Patient Operation Successful!
+                      </div>
+                </div>
+            </div>
+            <div style="margin: 20px 20px 20px 20px ;">
+                <div class="row" *ngIf="retrievedSavedData">
+                    <div class="alert alert-success" role="alert">
+                        Retrieved Saved Data!
+                      </div>
+                </div>
+            </div> 
+            <div class="row" *ngIf="isChildActive" style="margin-left: 20%;">
+                <div class="col-md-4" >
+                    <button type="submit" class="btn btn-primary center" (click)="savePatient()" >Save Details</button>
+                </div>
+                <div class="col-md-2" *ngIf="modes.addMode">
+                    <button type="submit" class="btn btn-primary center" (click)="submitPatientDetails()" >Submit Details</button>
+                </div>
+                <div class="col-md-2" *ngIf="modes.editMode">
+                    <button type="submit" class="btn btn-primary center" (click)="submitModifyPatientDetails()" >Submit Details</button>
+                </div>
+                <div class="col-md-2" *ngIf="modes.deleteMode">
+                    <button type="submit" class="btn btn-primary center" (click)="submitDeletePatientRequest()" >Submit Details</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>    
+
+
+
+
+
+<!-- Search Patient Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Search Patient</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="no">Mobile Number</label>
+                <input type="text" class="form-control is-valid"
+                class="form-control"
+                name="firstname" id="exampleInputFirdtname"
+                placeholder="10 digits mobile number" #no="ngModel"
+                [(ngModel)]="patientSearchFilter.mobileNumber"
+                [required]="patientSearchFilter?.email?.length<=0">
+                <div *ngIf="formSubmitted && no.invalid">
+                    <label *ngIf="no?.errors?.required" class="label col-form-label label-required-error">
+                            Please provide a valid input.
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="emailRequired">Email</label>
+                <input type="text" class="form-control is-valid"
+                class="form-control"
+                name="firstname" id="exampleInputFirdtname"
+                placeholder="Email Id" #emailRequired="ngModel"
+                [(ngModel)]="patientSearchFilter.email"
+                [required]="patientSearchFilter?.mobileNumber?.length<=0">
+                <div *ngIf="formSubmitted && emailRequired.invalid">
+                    <label *ngIf="emailRequired?.errors?.required" class="label col-form-label label-required-error">
+                            Please provide a valid input.
+                    </label>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="modal-dismissal" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="searchPatient()">Search Patient</button>
+      </div>
+    </div>
+  </div>
+</div>

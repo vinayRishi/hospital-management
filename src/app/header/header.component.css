@@ -1,0 +1,20 @@
+nav-link{
+    font-weight: 800;
+    color: black;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link {
+    font-weight: 600;
+    font-size: x-large;
+    color:white;
+    margin-left: 35%;
+}
+.nav-tabs {
+    background-color: #2C9C80   ;
+}
+.btn-outline-dark{
+    margin-left: 350px;
+    margin-top: 10px;
+    color: white;
+    border-color:white ;
+}

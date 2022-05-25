@@ -1,0 +1,9 @@
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+	 role="tab" aria-controls="nav-home" aria-selected="true">Hospital Management System</button>
+	<div *ngIf="loggedInuser?.email" class="navbar-header pull-right " style="margin-right: 0px 20px 0px 300px;">
+		<button type="button" class="btn btn-outline-dark" (click)="logout()">Logout</button>
+	</div>	
+	</div>
+</nav>
